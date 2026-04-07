@@ -1,0 +1,20 @@
+#ifndef TOKEN_H
+#define TOKEN_H
+
+
+typedef enum {
+    KW_PROGRAM, KW_VAR, KW_INTEGER, KW_REAL,
+    ID, NUM_INT, NUM_REAL,
+    OP_ASS, OP_AD, OP_MIN,
+    SMB_SEM, SMB_COM,
+    ERRO
+} TokenType;
+
+typedef struct{
+    TokenType type;
+    char lexema[100];
+    int linha;
+    int coluna;
+} Token;
+
+#endif

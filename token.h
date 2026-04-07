@@ -9,6 +9,8 @@ typedef enum {
     OP_LE, OP_GT, OP_GE, OP_MUL, OP_DIV,
     SMB_SEM, SMB_COM, SMB_OPA, SMB_CPA,
     SMB_COL, SMB_DOT, SMB_OBC, SMB_CBC,
+    KW_BEGIN,
+    KW_END, KW_IF, KW_THEN, KW_ELSE, KW_WHILE, KW_DO,
     ERRO
 } TokenType;
 
@@ -18,5 +20,7 @@ typedef struct{
     int linha;
     int coluna;
 } Token;
+
+const char* tokenTypeToString(TokenType t);
 
 #endif

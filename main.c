@@ -9,7 +9,7 @@
 #include "ts.h"
 
 int main(){
-    char codigo[] = "program x x y if x";
+    char codigo[] = "program x x y if x z";
     int i = 0;
     int linha = 1;
     int coluna = 1;

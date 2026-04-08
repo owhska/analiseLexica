@@ -14,4 +14,4 @@ Fazer o grafico da logica
 
 gcc main.c afd_numero.c identificador.c operadores.c lexer.c token.c ts.c  -o main
 
-./main
+./main <arquivo_teste>

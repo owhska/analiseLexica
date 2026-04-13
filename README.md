@@ -34,8 +34,8 @@ gcc main.c afd_numero.c identificador.c operadores.c lexer.c token.c ts.c -o mai
 ## Exemplo de saída (.lex)
 
 ```
-<KW_PROGRAM, program, linha=1, coluna=1>
-<ID, exemplo, linha=1, coluna=9>
-<SMB_SEM, ;, linha=1, coluna=16>
+<KW_PROGRAM, program> 1 1
+<ID, exemplo> 1 9
+<SMB_SEM, ;> 1 16
 ```
 

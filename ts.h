@@ -10,6 +10,7 @@ typedef struct{
 
 void adicionarSimbolo(char *lexema, TokenType tipo);
 void salvarTS();
+void inicializarTS();
 
 #endif
 

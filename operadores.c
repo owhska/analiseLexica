@@ -25,6 +25,8 @@ TokenType reconhecerOperador(char *str){
     if (strcmp(str, ")") == 0) return SMB_CPA;
     if (strcmp(str, ":") == 0) return SMB_COL;
     if (strcmp(str, ".") == 0) return SMB_DOT;
+    if (strcmp(str, "{") == 0) return SMB_OBC;
+    if (strcmp(str, "}") == 0) return SMB_CBC;
 
     return ERRO;
 

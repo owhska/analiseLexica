@@ -1,0 +1,15 @@
+Lexema               Tipo
+-------------------- --------------------
+program              palavra-reservada
+var                  palavra-reservada
+integer              palavra-reservada
+real                 palavra-reservada
+begin                palavra-reservada
+end                  palavra-reservada
+if                   palavra-reservada
+then                 palavra-reservada
+else                 palavra-reservada
+while                palavra-reservada
+do                   palavra-reservada
+teste                identificador
+x                    identificador

@@ -66,16 +66,20 @@ Token getNextToken(char *entrada, int *i, int *linha, int *coluna) {
 
     char c = entrada[*i];
 
-    if (isdigit(c)) {
 
-        while (isdigit(entrada[*i]) || entrada[*i] == '.' || entrada[*i] == 'E') {
+    if (isdigit(c)) {
+        while (isdigit(entrada[*i]) || entrada[*i] == '.' || entrada[*i] == 'E'
+                || ((entrada[*i] == '+' || entrada[*i] == '-') && j > 0 && buffer[j-1] == 'E')) {
             buffer[j++] = entrada[*i];
             (*i)++;
             (*coluna)++;
         }
         buffer[j] = '\0';
 
-        if (reconhecerNumeros(buffer))
+        int result = reconhecerNumeros(buffer);
+        if (result == 2)
+            t.type = NUM_REAL;
+        else if (result == 1)
             t.type = NUM_INT;
         else
             t.type = ERRO;
@@ -85,10 +89,10 @@ Token getNextToken(char *entrada, int *i, int *linha, int *coluna) {
     }
 
     if (isalpha(c)) {
-
         while (isalnum(entrada[*i])) {
             buffer[j++] = entrada[*i];
             (*i)++;
+            (*coluna)++;  // <-- linha adicionada
         }
         buffer[j] = '\0';
 

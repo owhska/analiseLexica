@@ -64,7 +64,8 @@ int reconhecerNumeros(char *str){
         if (s == DEAD)
             return 0;
     }
-
-    return (s == E3 || s == E4 || s == E7);
+    
+    if (s == E3) return 1;
+    if (s == E4 || s == E7) return 2;
 }
 

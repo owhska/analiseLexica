@@ -31,6 +31,8 @@ int main(int argc, char *argv[]){
 
     Token t;
 
+    inicializarTS();
+
     FILE *f = fopen("saida.lex", "w");
 
     if (f == NULL) {
@@ -47,20 +49,20 @@ int main(int argc, char *argv[]){
             break;
         }
 
-        printf("<%s, %s, linha=%d, coluna=%d>\n",
+        printf("<%s, %s> %d %d\n",
                 tokenTypeToString(t.type),
                 t.lexema,
                 t.linha,
                 t.coluna);
 
-        fprintf(f, "<%s, %s, linha=%d, coluna=%d>\n",
+        fprintf(f, "<%s, %s> %d %d>\n",
                 tokenTypeToString(t.type),
                 t.lexema,
                 t.linha,
                 t.coluna);
 
         if (t.type == ERRO) {
-            fprintf(err, "<%s, %s, linha=%d, coluna=%d>\n",
+            fprintf(err, "<%s, %s> %d %d>\n",
                     tokenTypeToString(t.type),
                     t.lexema,
                     t.linha,

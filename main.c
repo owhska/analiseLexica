@@ -55,14 +55,14 @@ int main(int argc, char *argv[]){
                 t.linha,
                 t.coluna);
 
-        fprintf(f, "<%s, %s> %d %d>\n",
+        fprintf(f, "<%s, %s> %d %d\n",
                 tokenTypeToString(t.type),
                 t.lexema,
                 t.linha,
                 t.coluna);
 
         if (t.type == ERRO) {
-            fprintf(err, "<%s, %s> %d %d>\n",
+            fprintf(err, "<%s, %s> %d %d\n",
                     tokenTypeToString(t.type),
                     t.lexema,
                     t.linha,

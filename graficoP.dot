@@ -1,85 +1,108 @@
 digraph AFD_MicroPascal {
     rankdir=LR;
-    splines=true;
-    nodesep=1.2;
-    ranksep=2.0;
+    splines=false;
+    nodesep=0.8;
+    ranksep=2.2;
     fontname="Arial";
     fontsize=20;
 
-    node [shape=rectangle, style="filled,rounded", fontname="Arial", fontsize=18,
-          fontcolor="black", margin="0.35,0.25", penwidth=2.0, width=1.8, height=0.7];
-    edge [fontname="Arial", fontsize=15, penwidth=1.8];
+    node [shape=rectangle, style="filled,rounded", fontname="Arial", fontsize=15,
+          fontcolor="black", margin="0.3,0.2", penwidth=2.0, width=1.8, height=0.6];
+    edge [fontname="Arial", fontsize=12, penwidth=1.6];
 
-    inicio [shape=point, width=0.2];
+    inicio [shape=point, width=0.2, fillcolor=black];
+    S0 [label="S0\ninício", fillcolor="#AED6F1", penwidth=2.5];
 
-    S0 [label="S0 | início", fillcolor="#AED6F1", penwidth=2.5];
+    /* Estados de aceitação — verde */
+    Q_ID     [label="ID / KW",    fillcolor="#A9DFBF", penwidth=4.0];
+    Q_INT    [label="NUM_INT",     fillcolor="#A9DFBF", penwidth=4.0];
+    Q_REAL   [label="NUM_REAL",    fillcolor="#A9DFBF", penwidth=4.0];
+    Q_REAL_E [label="NUM_REAL_E",  fillcolor="#A9DFBF", penwidth=4.0];
+    Q_ASS    [label="OP_ASS",      fillcolor="#A9DFBF", penwidth=4.0];
+    Q_COL    [label="SMB_COL",     fillcolor="#A9DFBF", penwidth=4.0];
+    Q_LE     [label="OP_LE",       fillcolor="#A9DFBF", penwidth=4.0];
+    Q_LT     [label="OP_LT",       fillcolor="#A9DFBF", penwidth=4.0];
+    Q_NE     [label="OP_NE",       fillcolor="#A9DFBF", penwidth=4.0];
+    Q_GE     [label="OP_GE",       fillcolor="#A9DFBF", penwidth=4.0];
+    Q_GT     [label="OP_GT",       fillcolor="#A9DFBF", penwidth=4.0];
+    Q_SIM    [label="SMB / OP",    fillcolor="#A9DFBF", penwidth=4.0];
+    Q_COM    [label="COMENT. OK",  fillcolor="#A9DFBF", penwidth=4.0];
+    Q_CBC    [label="SMB_CBC",     fillcolor="#A9DFBF", penwidth=4.0];
+    Q_ERRO   [label="ERRO",        fillcolor="#F1948A", penwidth=4.0];
 
-    Q_ID     [label="ID / KW",        fillcolor="#A9DFBF", penwidth=4.0];
-    Q_INT    [label="NUM_INT",         fillcolor="#A9DFBF", penwidth=4.0];
-    Q_REAL   [label="NUM_REAL",        fillcolor="#A9DFBF", penwidth=4.0];
-    Q_REAL_E [label="NUM_REAL_E",      fillcolor="#A9DFBF", penwidth=4.0];
-    Q_ASS    [label="OP_ASS",          fillcolor="#A9DFBF", penwidth=4.0];
-    Q_COL    [label="SMB_COL",         fillcolor="#A9DFBF", penwidth=4.0];
-    Q_LE     [label="OP_LE",           fillcolor="#A9DFBF", penwidth=4.0];
-    Q_LT     [label="OP_LT",           fillcolor="#A9DFBF", penwidth=4.0];
-    Q_NE     [label="OP_NE",           fillcolor="#A9DFBF", penwidth=4.0];
-    Q_GE     [label="OP_GE",           fillcolor="#A9DFBF", penwidth=4.0];
-    Q_GT     [label="OP_GT",           fillcolor="#A9DFBF", penwidth=4.0];
-    Q_SIM    [label="SMB / OP",        fillcolor="#A9DFBF", penwidth=4.0];
-    Q_COM    [label="COMENTÁRIO OK",   fillcolor="#A9DFBF", penwidth=4.0];
-    Q_ERRO   [label="ERRO",            fillcolor="#F1948A", penwidth=4.0];
+    /* Estados intermediários — amarelo */
+    Q_ALFA   [label="lendo ID",    fillcolor="#FCF3CF"];
+    Q_NUM_I  [label="num inteiro", fillcolor="#FCF3CF"];
+    Q_NUM_D  [label="num decimal", fillcolor="#FCF3CF"];
+    Q_NUM_E  [label="exp 'E'",     fillcolor="#FCF3CF"];
+    Q_NUM_ES [label="exp sinal",   fillcolor="#FCF3CF"];
+    Q_NUM_ED [label="exp dígito",  fillcolor="#FCF3CF"];
+    Q_COLON  [label="':'",         fillcolor="#FCF3CF"];
+    Q_LESS   [label="'<'",         fillcolor="#FCF3CF"];
+    Q_GREAT  [label="'>'",         fillcolor="#FCF3CF"];
+    Q_COMENT [label="coment.\naberto", fillcolor="#D6EAF8"];
 
-    Q_NUM_I  [label="num inteiro",     fillcolor="#FCF3CF"];
-    Q_NUM_D  [label="num decimal",     fillcolor="#FCF3CF"];
-    Q_NUM_E  [label="exp 'E'",         fillcolor="#FCF3CF"];
-    Q_NUM_ES [label="exp sinal",       fillcolor="#FCF3CF"];
-    Q_NUM_ED [label="exp dígito",      fillcolor="#FCF3CF"];
-    Q_COLON  [label="':'",             fillcolor="#FCF3CF"];
-    Q_LESS   [label="'<'",             fillcolor="#FCF3CF"];
-    Q_GREAT  [label="'>'",             fillcolor="#FCF3CF"];
-    Q_COMENT [label="comentário aberto", fillcolor="#D6EAF8"];
+    /* Forçar S0 no primeiro rank */
+    { rank=same; inicio; S0; }
+
+    /* Forçar nós de aceitação simples no mesmo rank à direita */
+    { rank=same; Q_SIM; Q_CBC; Q_ERRO; Q_COM; }
 
     inicio -> S0;
 
-    S0    -> Q_ID    [label="letra"];
-    Q_ID  -> Q_ID    [label="letra | dígito"];
+    /* Identificadores */
+    S0     -> Q_ALFA [label="letra"];
+    Q_ALFA -> Q_ALFA [label="letra|dígito"];
+    Q_ALFA -> Q_ID   [label="outro\n(retrocede)"];
 
+    /* Números inteiros */
     S0      -> Q_NUM_I [label="dígito"];
     Q_NUM_I -> Q_NUM_I [label="dígito"];
-    Q_NUM_I -> Q_INT   [label="outro (retrocede)"];
+    Q_NUM_I -> Q_INT   [label="outro\n(retrocede)"];
 
+    /* Números reais */
     Q_NUM_I -> Q_NUM_D [label="'.'"];
     Q_NUM_D -> Q_NUM_D [label="dígito"];
-    Q_NUM_D -> Q_REAL  [label="outro (retrocede)"];
+    Q_NUM_D -> Q_REAL  [label="outro\n(retrocede)"];
 
+    /* Notação científica */
     Q_NUM_I  -> Q_NUM_E  [label="'E'"];
     Q_NUM_D  -> Q_NUM_E  [label="'E'"];
-    Q_NUM_E  -> Q_NUM_ES [label="'+' | '-'"];
+    Q_NUM_E  -> Q_NUM_ES [label="'+'/'-'"];
     Q_NUM_E  -> Q_NUM_ED [label="dígito"];
     Q_NUM_ES -> Q_NUM_ED [label="dígito"];
     Q_NUM_ED -> Q_NUM_ED [label="dígito"];
-    Q_NUM_ED -> Q_REAL_E [label="outro (retrocede)"];
+    Q_NUM_ED -> Q_REAL_E [label="outro\n(retrocede)"];
 
+    /* := e : */
     S0      -> Q_COLON [label="':'"];
     Q_COLON -> Q_ASS   [label="'='"];
-    Q_COLON -> Q_COL   [label="outro (retrocede)"];
+    Q_COLON -> Q_COL   [label="outro\n(retrocede)"];
 
+    /* < <= <> */
     S0     -> Q_LESS [label="'<'"];
     Q_LESS -> Q_LE   [label="'='"];
     Q_LESS -> Q_NE   [label="'>'"];
-    Q_LESS -> Q_LT   [label="outro (retrocede)"];
+    Q_LESS -> Q_LT   [label="outro\n(retrocede)"];
 
+    /* > >= */
     S0      -> Q_GREAT [label="'>'"];
     Q_GREAT -> Q_GE    [label="'='"];
-    Q_GREAT -> Q_GT    [label="outro (retrocede)"];
+    Q_GREAT -> Q_GT    [label="outro\n(retrocede)"];
 
-    S0 -> Q_SIM [label="'=' | '+' | '-' | '*' | '/' | ';' | ',' | '.' | '(' | ')'"];
+    /* Símbolos simples — label curto sem risco de corte */
+    S0 -> Q_SIM [label="= + - * /\n; , . ( )"];
 
+    /* } solto */
+    S0 -> Q_CBC [label="'}'"];
+
+    /* Comentários */
     S0       -> Q_COMENT [label="'{'"];
-    Q_COMENT -> Q_COMENT [label="qualquer (≠ '}', ≠ EOF)"];
+    Q_COMENT -> Q_COMENT [label="qualquer\n(≠'}' ≠EOF)"];
     Q_COMENT -> Q_COM    [label="'}'"];
     Q_COMENT -> Q_ERRO   [label="EOF"];
 
-    S0 -> Q_ERRO [label="caractere inválido"];
+    /* Erro */
+    S0 -> Q_ERRO [label="inválido"];
 }
 

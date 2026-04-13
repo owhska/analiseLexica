@@ -11,5 +11,5 @@ then                 palavra-reservada
 else                 palavra-reservada
 while                palavra-reservada
 do                   palavra-reservada
-teste                identificador
+erros                identificador
 x                    identificador
